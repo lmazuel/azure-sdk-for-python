@@ -349,12 +349,6 @@ class SapCloudForCustomerSinkWriteBehavior(Enum):
     update = "Update"
 
 
-class IntegrationRuntimeType(Enum):
-
-    managed = "Managed"
-    self_hosted = "SelfHosted"
-
-
 class SelfHostedIntegrationRuntimeNodeStatus(Enum):
 
     need_registration = "NeedRegistration"
