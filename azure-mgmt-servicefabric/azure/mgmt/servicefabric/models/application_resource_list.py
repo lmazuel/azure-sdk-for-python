@@ -12,20 +12,16 @@
 from msrest.serialization import Model
 
 
-class ErrorModelError(Model):
-    """The error detail .
+class ApplicationResourceList(Model):
+    """The list of application resources.
 
-    :param code: The error code
-    :type code: str
-    :param message: The error message
-    :type message: str
+    :param value:
+    :type value: list[~azure.mgmt.servicefabric.models.ApplicationResource]
     """
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
+        'value': {'key': 'value', 'type': '[ApplicationResource]'},
     }
 
-    def __init__(self, code=None, message=None):
-        self.code = code
-        self.message = message
+    def __init__(self, value=None):
+        self.value = value

@@ -16,8 +16,8 @@ from msrestazure.azure_operation import AzureOperationPoller
 from .. import models
 
 
-class ClustersOperations(object):
-    """ClustersOperations operations.
+class ApplicationOperations(object):
+    """ApplicationOperations operations.
 
     :param client: Client for service requests.
     :param config: Configuration of service client.
@@ -35,40 +35,107 @@ class ClustersOperations(object):
 
         self.config = config
 
-    def create(
-            self, resource_group_name, cluster_name, api_version, subscription_id, parameters, custom_headers=None, raw=False, **operation_config):
-        """Create a ServiceFabric cluster.
+    def get(
+            self, subscription_id, resource_group_name, cluster_name, application_name, api_version, custom_headers=None, raw=False, **operation_config):
+        """Returns an application resource with the specified name.
 
-        Create cluster resource
-        .
-
+        :param subscription_id: The customer subscription identifier
+        :type subscription_id: str
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param cluster_name: The name of the cluster resource
         :type cluster_name: str
+        :param application_name: The name of the application resource.
+        :type application_name: str
         :param api_version: The version of the API.
         :type api_version: str
-        :param subscription_id: The customer subscription identifier
-        :type subscription_id: str
-        :param parameters: The cluster resource.
-        :type parameters: ~azure.mgmt.servicefabric.models.Cluster
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
-        :return: An instance of AzureOperationPoller that returns Cluster or
-         ClientRawResponse if raw=true
+        :param operation_config: :ref:`Operation configuration
+         overrides<msrest:optionsforoperations>`.
+        :return: ApplicationResource or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.servicefabric.models.ApplicationResource or
+         ~msrest.pipeline.ClientRawResponse
+        :raises:
+         :class:`ErrorModelException<azure.mgmt.servicefabric.models.ErrorModelException>`
+        """
+        # Construct URL
+        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}'
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'clusterName': self._serialize.url("cluster_name", cluster_name, 'str'),
+            'applicationName': self._serialize.url("application_name", application_name, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct and send request
+        request = self._client.get(url, query_parameters)
+        response = self._client.send(request, header_parameters, **operation_config)
+
+        if response.status_code not in [200]:
+            raise models.ErrorModelException(self._deserialize, response)
+
+        deserialized = None
+
+        if response.status_code == 200:
+            deserialized = self._deserialize('ApplicationResource', response)
+
+        if raw:
+            client_raw_response = ClientRawResponse(deserialized, response)
+            return client_raw_response
+
+        return deserialized
+
+    def put(
+            self, subscription_id, resource_group_name, cluster_name, application_name, api_version, parameters, custom_headers=None, raw=False, **operation_config):
+        """Creates or updates an application resource with the specified name.
+
+        :param subscription_id: The customer subscription identifier
+        :type subscription_id: str
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param cluster_name: The name of the cluster resource
+        :type cluster_name: str
+        :param application_name: The name of the application resource.
+        :type application_name: str
+        :param api_version: The version of the API.
+        :type api_version: str
+        :param parameters: The application resource.
+        :type parameters: ~azure.mgmt.servicefabric.models.ApplicationResource
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: returns the direct response alongside the
+         deserialized response
+        :return: An instance of AzureOperationPoller that returns
+         ApplicationResource or ClientRawResponse if raw=true
         :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.servicefabric.models.Cluster]
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.servicefabric.models.ApplicationResource]
          or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorModelException<azure.mgmt.servicefabric.models.ErrorModelException>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}'
+        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}'
         path_format_arguments = {
+            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'clusterName': self._serialize.url("cluster_name", cluster_name, 'str'),
-            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str')
+            'applicationName': self._serialize.url("application_name", application_name, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -87,7 +154,7 @@ class ClustersOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(parameters, 'Cluster')
+        body_content = self._serialize.body(parameters, 'ApplicationResource')
 
         # Construct and send request
         def long_running_send():
@@ -106,13 +173,110 @@ class ClustersOperations(object):
 
         def get_long_running_output(response):
 
-            if response.status_code not in [200, 202]:
+            if response.status_code not in [202]:
                 raise models.ErrorModelException(self._deserialize, response)
 
             deserialized = None
 
-            if response.status_code == 200:
-                deserialized = self._deserialize('Cluster', response)
+            if response.status_code == 202:
+                deserialized = self._deserialize('ApplicationResource', response)
+
+            if raw:
+                client_raw_response = ClientRawResponse(deserialized, response)
+                return client_raw_response
+
+            return deserialized
+
+        if raw:
+            response = long_running_send()
+            return get_long_running_output(response)
+
+        long_running_operation_timeout = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        return AzureOperationPoller(
+            long_running_send, get_long_running_output,
+            get_long_running_status, long_running_operation_timeout)
+
+    def patch(
+            self, subscription_id, resource_group_name, cluster_name, application_name, api_version, parameters, custom_headers=None, raw=False, **operation_config):
+        """Updates an application resource with the specified name.
+
+        :param subscription_id: The customer subscription identifier
+        :type subscription_id: str
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param cluster_name: The name of the cluster resource
+        :type cluster_name: str
+        :param application_name: The name of the application resource.
+        :type application_name: str
+        :param api_version: The version of the API.
+        :type api_version: str
+        :param parameters: The application resource for patch operations.
+        :type parameters:
+         ~azure.mgmt.servicefabric.models.ApplicationResourceUpdate
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: returns the direct response alongside the
+         deserialized response
+        :return: An instance of AzureOperationPoller that returns
+         ApplicationResourceUpdate or ClientRawResponse if raw=true
+        :rtype:
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.servicefabric.models.ApplicationResourceUpdate]
+         or ~msrest.pipeline.ClientRawResponse
+        :raises:
+         :class:`ErrorModelException<azure.mgmt.servicefabric.models.ErrorModelException>`
+        """
+        # Construct URL
+        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}'
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'clusterName': self._serialize.url("cluster_name", cluster_name, 'str'),
+            'applicationName': self._serialize.url("application_name", application_name, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct body
+        body_content = self._serialize.body(parameters, 'ApplicationResourceUpdate')
+
+        # Construct and send request
+        def long_running_send():
+
+            request = self._client.patch(url, query_parameters)
+            return self._client.send(
+                request, header_parameters, body_content, **operation_config)
+
+        def get_long_running_status(status_link, headers=None):
+
+            request = self._client.get(status_link)
+            if headers:
+                request.headers.update(headers)
+            return self._client.send(
+                request, header_parameters, **operation_config)
+
+        def get_long_running_output(response):
+
+            if response.status_code not in [202]:
+                raise models.ErrorModelException(self._deserialize, response)
+
+            deserialized = None
+
+            if response.status_code == 202:
+                deserialized = self._deserialize('ApplicationResourceUpdate', response)
 
             if raw:
                 client_raw_response = ClientRawResponse(deserialized, response)
@@ -132,96 +296,36 @@ class ClustersOperations(object):
             get_long_running_status, long_running_operation_timeout)
 
     def delete(
-            self, resource_group_name, cluster_name, api_version, subscription_id, custom_headers=None, raw=False, **operation_config):
-        """Delete cluster resource.
+            self, subscription_id, resource_group_name, cluster_name, application_name, api_version, custom_headers=None, raw=False, **operation_config):
+        """Deletes an application resource with the specified name.
 
-        Delete cluster resource
-        .
-
+        :param subscription_id: The customer subscription identifier
+        :type subscription_id: str
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param cluster_name: The name of the cluster resource
         :type cluster_name: str
+        :param application_name: The name of the application resource.
+        :type application_name: str
         :param api_version: The version of the API.
         :type api_version: str
-        :param subscription_id: The customer subscription identifier
-        :type subscription_id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
-        :param operation_config: :ref:`Operation configuration
-         overrides<msrest:optionsforoperations>`.
-        :return: None or ClientRawResponse if raw=true
-        :rtype: None or ~msrest.pipeline.ClientRawResponse
-        :raises:
-         :class:`ErrorModelException<azure.mgmt.servicefabric.models.ErrorModelException>`
-        """
-        # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}'
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'clusterName': self._serialize.url("cluster_name", cluster_name, 'str'),
-            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct and send request
-        request = self._client.delete(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
-
-        if response.status_code not in [200, 204]:
-            raise models.ErrorModelException(self._deserialize, response)
-
-        if raw:
-            client_raw_response = ClientRawResponse(None, response)
-            return client_raw_response
-
-    def get(
-            self, resource_group_name, cluster_name, api_version, subscription_id, custom_headers=None, raw=False, **operation_config):
-        """Get cluster resource.
-
-        Get cluster resource
-        .
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param cluster_name: The name of the cluster resource
-        :type cluster_name: str
-        :param api_version: The version of the API.
-        :type api_version: str
-        :param subscription_id: The customer subscription identifier
-        :type subscription_id: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :param operation_config: :ref:`Operation configuration
-         overrides<msrest:optionsforoperations>`.
-        :return: Cluster or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.servicefabric.models.Cluster or
+        :return: An instance of AzureOperationPoller that returns None or
+         ClientRawResponse if raw=true
+        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
          ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorModelException<azure.mgmt.servicefabric.models.ErrorModelException>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}'
+        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}'
         path_format_arguments = {
+            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'clusterName': self._serialize.url("cluster_name", cluster_name, 'str'),
-            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str')
+            'applicationName': self._serialize.url("application_name", application_name, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -238,87 +342,12 @@ class ClustersOperations(object):
             header_parameters.update(custom_headers)
         if self.config.accept_language is not None:
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct and send request
-        request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
-
-        if response.status_code not in [200]:
-            raise models.ErrorModelException(self._deserialize, response)
-
-        deserialized = None
-
-        if response.status_code == 200:
-            deserialized = self._deserialize('Cluster', response)
-
-        if raw:
-            client_raw_response = ClientRawResponse(deserialized, response)
-            return client_raw_response
-
-        return deserialized
-
-    def update(
-            self, resource_group_name, cluster_name, api_version, subscription_id, parameters, custom_headers=None, raw=False, **operation_config):
-        """Update cluster configuration.
-
-        Update cluster configuration
-        .
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param cluster_name: The name of the cluster resource
-        :type cluster_name: str
-        :param api_version: The version of the API.
-        :type api_version: str
-        :param subscription_id: The customer subscription identifier
-        :type subscription_id: str
-        :param parameters: The parameters which contains the property value
-         and property name which used to update the cluster configuration.
-        :type parameters:
-         ~azure.mgmt.servicefabric.models.ClusterUpdateParameters
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :return: An instance of AzureOperationPoller that returns Cluster or
-         ClientRawResponse if raw=true
-        :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.servicefabric.models.Cluster]
-         or ~msrest.pipeline.ClientRawResponse
-        :raises:
-         :class:`ErrorModelException<azure.mgmt.servicefabric.models.ErrorModelException>`
-        """
-        # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}'
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'clusterName': self._serialize.url("cluster_name", cluster_name, 'str'),
-            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct body
-        body_content = self._serialize.body(parameters, 'ClusterUpdateParameters')
 
         # Construct and send request
         def long_running_send():
 
-            request = self._client.patch(url, query_parameters)
-            return self._client.send(
-                request, header_parameters, body_content, **operation_config)
+            request = self._client.delete(url, query_parameters)
+            return self._client.send(request, header_parameters, **operation_config)
 
         def get_long_running_status(status_link, headers=None):
 
@@ -330,19 +359,12 @@ class ClustersOperations(object):
 
         def get_long_running_output(response):
 
-            if response.status_code not in [200, 202]:
+            if response.status_code not in [202, 204]:
                 raise models.ErrorModelException(self._deserialize, response)
 
-            deserialized = None
-
-            if response.status_code == 200:
-                deserialized = self._deserialize('Cluster', response)
-
             if raw:
-                client_raw_response = ClientRawResponse(deserialized, response)
+                client_raw_response = ClientRawResponse(None, response)
                 return client_raw_response
-
-            return deserialized
 
         if raw:
             response = long_running_send()
@@ -355,35 +377,35 @@ class ClustersOperations(object):
             long_running_send, get_long_running_output,
             get_long_running_status, long_running_operation_timeout)
 
-    def list_by_resource_group(
-            self, resource_group_name, api_version, subscription_id, custom_headers=None, raw=False, **operation_config):
-        """List cluster resource by resource group.
+    def list(
+            self, subscription_id, resource_group_name, cluster_name, api_version, custom_headers=None, raw=False, **operation_config):
+        """Returns all application resources in the specified cluster.
 
-        List cluster resource by resource group
-        .
-
+        :param subscription_id: The customer subscription identifier
+        :type subscription_id: str
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
+        :param cluster_name: The name of the cluster resource
+        :type cluster_name: str
         :param api_version: The version of the API.
         :type api_version: str
-        :param subscription_id: The customer subscription identifier
-        :type subscription_id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: ClusterListResult or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.servicefabric.models.ClusterListResult or
+        :return: ApplicationResourceList or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.servicefabric.models.ApplicationResourceList or
          ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorModelException<azure.mgmt.servicefabric.models.ErrorModelException>`
         """
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters'
+        url = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications'
         path_format_arguments = {
+            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str')
+            'clusterName': self._serialize.url("cluster_name", cluster_name, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -411,68 +433,7 @@ class ClustersOperations(object):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('ClusterListResult', response)
-
-        if raw:
-            client_raw_response = ClientRawResponse(deserialized, response)
-            return client_raw_response
-
-        return deserialized
-
-    def list(
-            self, api_version, subscription_id, custom_headers=None, raw=False, **operation_config):
-        """List cluster resource.
-
-        List cluster resource
-        .
-
-        :param api_version: The version of the API.
-        :type api_version: str
-        :param subscription_id: The customer subscription identifier
-        :type subscription_id: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :param operation_config: :ref:`Operation configuration
-         overrides<msrest:optionsforoperations>`.
-        :return: ClusterListResult or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.servicefabric.models.ClusterListResult or
-         ~msrest.pipeline.ClientRawResponse
-        :raises:
-         :class:`ErrorModelException<azure.mgmt.servicefabric.models.ErrorModelException>`
-        """
-        # Construct URL
-        url = '/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/clusters'
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct and send request
-        request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
-
-        if response.status_code not in [200]:
-            raise models.ErrorModelException(self._deserialize, response)
-
-        deserialized = None
-
-        if response.status_code == 200:
-            deserialized = self._deserialize('ClusterListResult', response)
+            deserialized = self._deserialize('ApplicationResourceList', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
