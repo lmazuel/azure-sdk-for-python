@@ -62,6 +62,8 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
      been turned on. Possible values include: 'On', 'Off'
     :vartype auto_update: str or
      ~azure.mgmt.datafactory.models.IntegrationRuntimeAutoUpdate
+    :ivar version_status: Status of the integration runtime version.
+    :vartype version_status: str
     """
 
     _validation = {
@@ -77,6 +79,7 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
         'capabilities': {'readonly': True},
         'service_urls': {'readonly': True},
         'auto_update': {'readonly': True},
+        'version_status': {'readonly': True},
     }
 
     _attribute_map = {
@@ -94,6 +97,7 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
         'capabilities': {'key': 'typeProperties.capabilities', 'type': '{str}'},
         'service_urls': {'key': 'typeProperties.serviceUrls', 'type': '[str]'},
         'auto_update': {'key': 'typeProperties.autoUpdate', 'type': 'str'},
+        'version_status': {'key': 'typeProperties.versionStatus', 'type': 'str'},
     }
 
     def __init__(self, additional_properties=None, nodes=None):
@@ -109,4 +113,5 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
         self.capabilities = None
         self.service_urls = None
         self.auto_update = None
+        self.version_status = None
         self.type = 'SelfHosted'

@@ -25,6 +25,12 @@ class IntegrationRuntimeState(Enum):
     offline = "Offline"
 
 
+class IntegrationRuntimeAutoUpdate(Enum):
+
+    on = "On"
+    off = "Off"
+
+
 class ParameterType(Enum):
 
     object_enum = "Object"
@@ -343,6 +349,12 @@ class SapCloudForCustomerSinkWriteBehavior(Enum):
     update = "Update"
 
 
+class IntegrationRuntimeType(Enum):
+
+    managed = "Managed"
+    self_hosted = "SelfHosted"
+
+
 class SelfHostedIntegrationRuntimeNodeStatus(Enum):
 
     need_registration = "NeedRegistration"
@@ -365,12 +377,6 @@ class IntegrationRuntimeInternalChannelEncryptionMode(Enum):
     not_set = "NotSet"
     ssl_encrypted = "SslEncrypted"
     not_encrypted = "NotEncrypted"
-
-
-class IntegrationRuntimeAutoUpdate(Enum):
-
-    on = "On"
-    off = "Off"
 
 
 class ManagedIntegrationRuntimeNodeStatus(Enum):
