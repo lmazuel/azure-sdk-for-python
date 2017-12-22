@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"name": "pyarmstorage18268f1524", "type": "Microsoft.Storage/storageAccounts"}'
+    body: '{"name": "pyarmstorage303be51556", "type": "Microsoft.Storage/storageAccounts"}'
     headers:
       Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -20,7 +20,7 @@ interactions:
       cache-control: [no-cache]
       content-length: ['23']
       content-type: [application/json]
-      date: ['Fri, 22 Dec 2017 01:16:21 GMT']
+      date: ['Fri, 22 Dec 2017 01:46:02 GMT']
       expires: ['-1']
       pragma: [no-cache]
       server: [Microsoft-Azure-Storage-Resource-Provider/1.0, Microsoft-HTTPAPI/2.0]
@@ -41,19 +41,19 @@ interactions:
           msrest_azure/0.4.19 storagemanagementclient/2017-06-01 Azure-SDK-For-Python]
       accept-language: [en-US]
     method: PUT
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async268f1524/providers/Microsoft.Storage/storageAccounts/pyarmstorage18268f1524?api-version=2017-06-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async23be51556/providers/Microsoft.Storage/storageAccounts/pyarmstorage303be51556?api-version=2017-06-01
   response:
     body: {string: ''}
     headers:
       cache-control: [no-cache]
       content-length: ['0']
-      date: ['Fri, 22 Dec 2017 01:16:22 GMT']
+      date: ['Fri, 22 Dec 2017 01:46:05 GMT']
       expires: ['-1']
-      location: ['https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/locations/westus/asyncoperations/96374471-0693-4352-aa77-d425b0aac4bd?monitor=true&api-version=2017-06-01']
+      location: ['https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/locations/westus/asyncoperations/f19ae3f3-3023-4b7c-ae4a-d1c9b6e2a535?monitor=true&api-version=2017-06-01']
       pragma: [no-cache]
       server: [Microsoft-Azure-Storage-Resource-Provider/1.0, Microsoft-HTTPAPI/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains]
-      x-ms-ratelimit-remaining-subscription-writes: ['1198']
+      x-ms-ratelimit-remaining-subscription-writes: ['1197']
     status: {code: 202, message: Accepted}
 - request:
     body: null
@@ -66,16 +66,16 @@ interactions:
           msrest_azure/0.4.19 storagemanagementclient/2017-06-01 Azure-SDK-For-Python]
       accept-language: [en-US]
     method: GET
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/locations/westus/asyncoperations/96374471-0693-4352-aa77-d425b0aac4bd?monitor=true&api-version=2017-06-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/locations/westus/asyncoperations/f19ae3f3-3023-4b7c-ae4a-d1c9b6e2a535?monitor=true&api-version=2017-06-01
   response:
-    body: {string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async268f1524/providers/Microsoft.Storage/storageAccounts/pyarmstorage18268f1524","kind":"Storage","location":"westus","name":"pyarmstorage18268f1524","properties":{"creationTime":"2017-12-22T01:16:23.4873474Z","encryption":{"keySource":"Microsoft.Storage","services":{"blob":{"enabled":true,"lastEnabledTime":"2017-12-22T01:16:23.4903474Z"},"file":{"enabled":true,"lastEnabledTime":"2017-12-22T01:16:23.4903474Z"}}},"networkAcls":{"bypass":"AzureServices","defaultAction":"Allow","ipRules":[],"virtualNetworkRules":[]},"primaryEndpoints":{"blob":"https://pyarmstorage18268f1524.blob.core.windows.net/","file":"https://pyarmstorage18268f1524.file.core.windows.net/","queue":"https://pyarmstorage18268f1524.queue.core.windows.net/","table":"https://pyarmstorage18268f1524.table.core.windows.net/"},"primaryLocation":"westus","provisioningState":"Succeeded","statusOfPrimary":"available","supportsHttpsTrafficOnly":false},"sku":{"name":"Standard_LRS","tier":"Standard"},"tags":{},"type":"Microsoft.Storage/storageAccounts"}
+    body: {string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async23be51556/providers/Microsoft.Storage/storageAccounts/pyarmstorage303be51556","kind":"Storage","location":"westus","name":"pyarmstorage303be51556","properties":{"creationTime":"2017-12-22T01:46:06.7070974Z","encryption":{"keySource":"Microsoft.Storage","services":{"blob":{"enabled":true,"lastEnabledTime":"2017-12-22T01:46:06.7100965Z"},"file":{"enabled":true,"lastEnabledTime":"2017-12-22T01:46:06.7100965Z"}}},"networkAcls":{"bypass":"AzureServices","defaultAction":"Allow","ipRules":[],"virtualNetworkRules":[]},"primaryEndpoints":{"blob":"https://pyarmstorage303be51556.blob.core.windows.net/","file":"https://pyarmstorage303be51556.file.core.windows.net/","queue":"https://pyarmstorage303be51556.queue.core.windows.net/","table":"https://pyarmstorage303be51556.table.core.windows.net/"},"primaryLocation":"westus","provisioningState":"Succeeded","statusOfPrimary":"available","supportsHttpsTrafficOnly":false},"sku":{"name":"Standard_LRS","tier":"Standard"},"tags":{},"type":"Microsoft.Storage/storageAccounts"}
 
         '}
     headers:
       cache-control: [no-cache]
-      content-length: ['1142']
+      content-length: ['1143']
       content-type: [application/json]
-      date: ['Fri, 22 Dec 2017 01:16:40 GMT']
+      date: ['Fri, 22 Dec 2017 01:46:23 GMT']
       expires: ['-1']
       pragma: [no-cache]
       server: [Microsoft-Azure-Storage-Resource-Provider/1.0, Microsoft-HTTPAPI/2.0]
@@ -94,16 +94,16 @@ interactions:
           msrest_azure/0.4.19 storagemanagementclient/2017-06-01 Azure-SDK-For-Python]
       accept-language: [en-US]
     method: GET
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async268f1524/providers/Microsoft.Storage/storageAccounts/pyarmstorage18268f1524?api-version=2017-06-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async23be51556/providers/Microsoft.Storage/storageAccounts/pyarmstorage303be51556?api-version=2017-06-01
   response:
-    body: {string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async268f1524/providers/Microsoft.Storage/storageAccounts/pyarmstorage18268f1524","kind":"Storage","location":"westus","name":"pyarmstorage18268f1524","properties":{"creationTime":"2017-12-22T01:16:23.4873474Z","encryption":{"keySource":"Microsoft.Storage","services":{"blob":{"enabled":true,"lastEnabledTime":"2017-12-22T01:16:23.4903474Z"},"file":{"enabled":true,"lastEnabledTime":"2017-12-22T01:16:23.4903474Z"}}},"networkAcls":{"bypass":"AzureServices","defaultAction":"Allow","ipRules":[],"virtualNetworkRules":[]},"primaryEndpoints":{"blob":"https://pyarmstorage18268f1524.blob.core.windows.net/","file":"https://pyarmstorage18268f1524.file.core.windows.net/","queue":"https://pyarmstorage18268f1524.queue.core.windows.net/","table":"https://pyarmstorage18268f1524.table.core.windows.net/"},"primaryLocation":"westus","provisioningState":"Succeeded","statusOfPrimary":"available","supportsHttpsTrafficOnly":false},"sku":{"name":"Standard_LRS","tier":"Standard"},"tags":{},"type":"Microsoft.Storage/storageAccounts"}
+    body: {string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async23be51556/providers/Microsoft.Storage/storageAccounts/pyarmstorage303be51556","kind":"Storage","location":"westus","name":"pyarmstorage303be51556","properties":{"creationTime":"2017-12-22T01:46:06.7070974Z","encryption":{"keySource":"Microsoft.Storage","services":{"blob":{"enabled":true,"lastEnabledTime":"2017-12-22T01:46:06.7100965Z"},"file":{"enabled":true,"lastEnabledTime":"2017-12-22T01:46:06.7100965Z"}}},"networkAcls":{"bypass":"AzureServices","defaultAction":"Allow","ipRules":[],"virtualNetworkRules":[]},"primaryEndpoints":{"blob":"https://pyarmstorage303be51556.blob.core.windows.net/","file":"https://pyarmstorage303be51556.file.core.windows.net/","queue":"https://pyarmstorage303be51556.queue.core.windows.net/","table":"https://pyarmstorage303be51556.table.core.windows.net/"},"primaryLocation":"westus","provisioningState":"Succeeded","statusOfPrimary":"available","supportsHttpsTrafficOnly":false},"sku":{"name":"Standard_LRS","tier":"Standard"},"tags":{},"type":"Microsoft.Storage/storageAccounts"}
 
         '}
     headers:
       cache-control: [no-cache]
-      content-length: ['1142']
+      content-length: ['1143']
       content-type: [application/json]
-      date: ['Fri, 22 Dec 2017 01:16:39 GMT']
+      date: ['Fri, 22 Dec 2017 01:46:22 GMT']
       expires: ['-1']
       pragma: [no-cache]
       server: [Microsoft-Azure-Storage-Resource-Provider/1.0, Microsoft-HTTPAPI/2.0]
@@ -123,17 +123,17 @@ interactions:
           msrest_azure/0.4.19 storagemanagementclient/2017-06-01 Azure-SDK-For-Python]
       accept-language: [en-US]
     method: DELETE
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async268f1524/providers/Microsoft.Storage/storageAccounts/pyarmstorage18268f1524?api-version=2017-06-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_storage_async_test_storage_accounts_async23be51556/providers/Microsoft.Storage/storageAccounts/pyarmstorage303be51556?api-version=2017-06-01
   response:
     body: {string: ''}
     headers:
       cache-control: [no-cache]
       content-length: ['0']
-      date: ['Fri, 22 Dec 2017 01:16:42 GMT']
+      date: ['Fri, 22 Dec 2017 01:46:25 GMT']
       expires: ['-1']
       pragma: [no-cache]
       server: [Microsoft-Azure-Storage-Resource-Provider/1.0, Microsoft-HTTPAPI/2.0]
       strict-transport-security: [max-age=31536000; includeSubDomains]
-      x-ms-ratelimit-remaining-subscription-writes: ['1199']
+      x-ms-ratelimit-remaining-subscription-writes: ['1198']
     status: {code: 200, message: OK}
 version: 1

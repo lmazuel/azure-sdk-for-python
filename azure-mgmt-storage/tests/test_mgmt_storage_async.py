@@ -35,13 +35,15 @@ class MgmtStorageTest(AzureMgmtTestCase):
         self.assertGreater(len(usages), 0)
 
     @ResourceGroupPreparer()
-    def test_storage_accounts_async(self, resource_group, location):
-        account_name = self.get_resource_name('pyarmstorage18')
+    def test_storage_accounts_async2(self, resource_group, location):
+        self.loop.run_until_complete(self._test_storage_accounts_async(resource_group, location))
 
-        future = self.storage_client.storage_accounts.check_name_availability(
+    async def _test_storage_accounts_async(self, resource_group, location):
+        account_name = self.get_resource_name('pyarmstorage30')
+
+        result_check = await self.storage_client.storage_accounts.check_name_availability(
             account_name
         )
-        result_check = self.loop.run_until_complete(future)
         self.assertTrue(result_check.name_available)
         self.assertFalse(result_check.reason)
         self.assertFalse(result_check.message)
@@ -51,21 +53,19 @@ class MgmtStorageTest(AzureMgmtTestCase):
             kind=models.Kind.storage,
             location=location,
         )
-        future = self.storage_client.storage_accounts.create(
+        result_create = await self.storage_client.storage_accounts.create(
             resource_group.name,
             account_name,
             params_create,
         )
-        result_create = self.loop.run_until_complete(future)
-        self.loop.run_until_complete(result_create)
+        await result_create
         storage_account = result_create.result()
         self.assertEqual(storage_account.name, account_name)
 
-        future = self.storage_client.storage_accounts.get_properties(
+        storage_account = await self.storage_client.storage_accounts.get_properties(
             resource_group.name,
             account_name,
         )
-        storage_account = self.loop.run_until_complete(future)
         self.assertEqual(storage_account.name, account_name)
 
         # result_list_keys = self.storage_client.storage_accounts.list_keys(
@@ -113,11 +113,10 @@ class MgmtStorageTest(AzureMgmtTestCase):
 
         # should there be a test of the update operation?
 
-        future = self.storage_client.storage_accounts.delete(
+        await self.storage_client.storage_accounts.delete(
             resource_group.name,
             account_name,
         )
-        self.loop.run_until_complete(future)
 
 #------------------------------------------------------------------------------
 if __name__ == '__main__':
