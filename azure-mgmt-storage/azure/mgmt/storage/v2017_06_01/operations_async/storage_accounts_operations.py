@@ -12,7 +12,7 @@
 import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
-from msrestazure.azure_operation import AzureOperationPoller
+from msrestazure.azure_async_operation import AzureOperationPoller
 
 from .. import models
 
@@ -157,18 +157,18 @@ class StorageAccountsOperations(object):
         body_content = self._serialize.body(parameters, 'StorageAccountCreateParameters')
 
         # Construct and send request
-        def long_running_send():
+        async def long_running_send():
 
             request = self._client.put(url, query_parameters)
-            return self._client.send(
+            return await self._client.async_send(
                 request, header_parameters, body_content, **operation_config)
 
-        def get_long_running_status(status_link, headers=None):
+        async def get_long_running_status(status_link, headers=None):
 
             request = self._client.get(status_link)
             if headers:
                 request.headers.update(headers)
-            return self._client.send(
+            return await self._client.async_send(
                 request, header_parameters, **operation_config)
 
         def get_long_running_output(response):
@@ -190,7 +190,7 @@ class StorageAccountsOperations(object):
             return deserialized
 
         if raw:
-            response = long_running_send()
+            response = await long_running_send()
             return get_long_running_output(response)
 
         long_running_operation_timeout = operation_config.get(
@@ -245,7 +245,7 @@ class StorageAccountsOperations(object):
 
         # Construct and send request
         request = self._client.delete(url, query_parameters)
-        response = await self._client.send(request, header_parameters, **operation_config)
+        response = await self._client.async_send(request, header_parameters, **operation_config)
 
         if response.status_code not in [200, 204]:
             exp = CloudError(response)
@@ -304,7 +304,7 @@ class StorageAccountsOperations(object):
 
         # Construct and send request
         request = self._client.get(url, query_parameters)
-        response = self._client.send(request, header_parameters, **operation_config)
+        response = await self._client.async_send(request, header_parameters, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
