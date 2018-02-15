@@ -44,7 +44,7 @@ class DnsManagementClientConfiguration(AzureConfiguration):
 
         super(DnsManagementClientConfiguration, self).__init__(base_url)
 
-        self.add_user_agent('dnsmanagementclient/{}'.format(VERSION))
+        self.add_user_agent('azure-mgmt-dns/{}'.format(VERSION))
         self.add_user_agent('Azure-SDK-For-Python')
 
         self.credentials = credentials
@@ -52,7 +52,7 @@ class DnsManagementClientConfiguration(AzureConfiguration):
 
 
 class DnsManagementClient(object):
-    """The DNS Management Client.
+    """The DNS Management Client. Change from a fork
 
     :ivar config: Configuration for client.
     :vartype config: DnsManagementClientConfiguration
