@@ -36,7 +36,8 @@ class ErrorResponse(Model):
         'message': {'key': 'message', 'type': 'str'},
     }
 
-    def __init__(self):
+    def __init__(self, **kwargs):
+        super(ErrorResponse, self).__init__(**kwargs)
         self.code = None
         self.message = None
 

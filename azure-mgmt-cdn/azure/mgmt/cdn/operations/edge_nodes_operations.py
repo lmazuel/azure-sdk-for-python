@@ -21,16 +21,18 @@ class EdgeNodesOperations(object):
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
-    :param deserializer: An objec model deserializer.
-    :ivar api_version: Version of the API to be used with the client request. Current version is 2017-04-02. Constant value: "2017-04-02".
+    :param deserializer: An object model deserializer.
+    :ivar api_version: Version of the API to be used with the client request. Current version is 2017-04-02. Constant value: "2017-10-12".
     """
+
+    models = models
 
     def __init__(self, client, config, serializer, deserializer):
 
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2017-04-02"
+        self.api_version = "2017-10-12"
 
         self.config = config
 
@@ -54,7 +56,7 @@ class EdgeNodesOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = '/providers/Microsoft.Cdn/edgenodes'
+                url = self.list.metadata['url']
 
                 # Construct parameters
                 query_parameters = {}
@@ -77,7 +79,7 @@ class EdgeNodesOperations(object):
             # Construct and send request
             request = self._client.get(url, query_parameters)
             response = self._client.send(
-                request, header_parameters, **operation_config)
+                request, header_parameters, stream=False, **operation_config)
 
             if response.status_code not in [200]:
                 raise models.ErrorResponseException(self._deserialize, response)
@@ -93,3 +95,4 @@ class EdgeNodesOperations(object):
             return client_raw_response
 
         return deserialized
+    list.metadata = {'url': '/providers/Microsoft.Cdn/edgenodes'}

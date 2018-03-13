@@ -32,5 +32,6 @@ class SupportedOptimizationTypesListResult(Model):
         'supported_optimization_types': {'key': 'supportedOptimizationTypes', 'type': '[str]'},
     }
 
-    def __init__(self):
+    def __init__(self, **kwargs):
+        super(SupportedOptimizationTypesListResult, self).__init__(**kwargs)
         self.supported_optimization_types = None

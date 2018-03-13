@@ -9,10 +9,10 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from .resource import Resource
+from .tracked_resource import TrackedResource
 
 
-class Endpoint(Resource):
+class Endpoint(TrackedResource):
     """CDN endpoint is the entity within a CDN profile containing configuration
     information such as origin, protocol, content caching and delivery
     behavior. The CDN endpoint uses the URL format
@@ -21,18 +21,23 @@ class Endpoint(Resource):
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
+    All required parameters must be populated in order to send to Azure.
+
     :ivar id: Resource ID.
     :vartype id: str
     :ivar name: Resource name.
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
-    :param location: Resource location.
+    :param location: Required. Resource location.
     :type location: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
-    :param origin_host_header: The host header CDN sends along with content
-     requests to origin. The default value is the host name of the origin.
+    :param origin_host_header: The host header value sent to the origin with
+     each request. If you leave this blank, the request hostname determines
+     this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud
+     Services require this host header value to match the origin hostname by
+     default.
     :type origin_host_header: str
     :param origin_path: A directory path on the origin that CDN can use to
      retreive content from, e.g. contoso.cloudapp.net/originpath.
@@ -76,10 +81,15 @@ class Endpoint(Resource):
      CDN endpoint. Each geo filter defines an acess rule to a specified path or
      content, e.g. block APAC for path /pictures/
     :type geo_filters: list[~azure.mgmt.cdn.models.GeoFilter]
+    :param delivery_policy: A policy that specifies the delivery rules to be
+     used for an endpoint.
+    :type delivery_policy:
+     ~azure.mgmt.cdn.models.EndpointPropertiesUpdateParametersDeliveryPolicy
     :ivar host_name: The host name of the endpoint structured as
      {endpointName}.{DNSZone}, e.g. consoto.azureedge.net
     :vartype host_name: str
-    :param origins: The source of the content being delivered via CDN.
+    :param origins: Required. The source of the content being delivered via
+     CDN.
     :type origins: list[~azure.mgmt.cdn.models.DeepCreatedOrigin]
     :ivar resource_state: Resource status of the endpoint. Possible values
      include: 'Creating', 'Deleting', 'Running', 'Starting', 'Stopped',
@@ -117,25 +127,27 @@ class Endpoint(Resource):
         'optimization_type': {'key': 'properties.optimizationType', 'type': 'str'},
         'probe_path': {'key': 'properties.probePath', 'type': 'str'},
         'geo_filters': {'key': 'properties.geoFilters', 'type': '[GeoFilter]'},
+        'delivery_policy': {'key': 'properties.deliveryPolicy', 'type': 'EndpointPropertiesUpdateParametersDeliveryPolicy'},
         'host_name': {'key': 'properties.hostName', 'type': 'str'},
         'origins': {'key': 'properties.origins', 'type': '[DeepCreatedOrigin]'},
         'resource_state': {'key': 'properties.resourceState', 'type': 'str'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
     }
 
-    def __init__(self, location, origins, tags=None, origin_host_header=None, origin_path=None, content_types_to_compress=None, is_compression_enabled=None, is_http_allowed=None, is_https_allowed=None, query_string_caching_behavior=None, optimization_type=None, probe_path=None, geo_filters=None):
-        super(Endpoint, self).__init__(location=location, tags=tags)
-        self.origin_host_header = origin_host_header
-        self.origin_path = origin_path
-        self.content_types_to_compress = content_types_to_compress
-        self.is_compression_enabled = is_compression_enabled
-        self.is_http_allowed = is_http_allowed
-        self.is_https_allowed = is_https_allowed
-        self.query_string_caching_behavior = query_string_caching_behavior
-        self.optimization_type = optimization_type
-        self.probe_path = probe_path
-        self.geo_filters = geo_filters
+    def __init__(self, **kwargs):
+        super(Endpoint, self).__init__(**kwargs)
+        self.origin_host_header = kwargs.get('origin_host_header', None)
+        self.origin_path = kwargs.get('origin_path', None)
+        self.content_types_to_compress = kwargs.get('content_types_to_compress', None)
+        self.is_compression_enabled = kwargs.get('is_compression_enabled', None)
+        self.is_http_allowed = kwargs.get('is_http_allowed', None)
+        self.is_https_allowed = kwargs.get('is_https_allowed', None)
+        self.query_string_caching_behavior = kwargs.get('query_string_caching_behavior', None)
+        self.optimization_type = kwargs.get('optimization_type', None)
+        self.probe_path = kwargs.get('probe_path', None)
+        self.geo_filters = kwargs.get('geo_filters', None)
+        self.delivery_policy = kwargs.get('delivery_policy', None)
         self.host_name = None
-        self.origins = origins
+        self.origins = kwargs.get('origins', None)
         self.resource_state = None
         self.provisioning_state = None

@@ -14,7 +14,8 @@ from msrest import Serializer, Deserializer
 from msrestazure import AzureConfiguration
 from .version import VERSION
 from msrest.pipeline import ClientRawResponse
-from msrestazure.azure_operation import AzureOperationPoller
+from msrest.polling import LROPoller, NoPolling
+from msrestazure.polling.arm_polling import ARMPolling
 import uuid
 from .operations.profiles_operations import ProfilesOperations
 from .operations.endpoints_operations import EndpointsOperations
@@ -51,7 +52,7 @@ class CdnManagementClientConfiguration(AzureConfiguration):
 
         super(CdnManagementClientConfiguration, self).__init__(base_url)
 
-        self.add_user_agent('cdnmanagementclient/{}'.format(VERSION))
+        self.add_user_agent('azure-mgmt-cdn/{}'.format(VERSION))
         self.add_user_agent('Azure-SDK-For-Python')
 
         self.credentials = credentials
@@ -59,7 +60,7 @@ class CdnManagementClientConfiguration(AzureConfiguration):
 
 
 class CdnManagementClient(object):
-    """Use these APIs to manage Azure CDN resources through the Azure Resource Manager. You must make sure that requests made to these resources are secure.
+    """This is a test
 
     :ivar config: Configuration for client.
     :vartype config: CdnManagementClientConfiguration
@@ -94,7 +95,7 @@ class CdnManagementClient(object):
         self._client = ServiceClient(self.config.credentials, self.config)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
-        self.api_version = '2017-04-02'
+        self.api_version = '2017-10-12'
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
 
@@ -134,7 +135,7 @@ class CdnManagementClient(object):
         check_name_availability_input = models.CheckNameAvailabilityInput(name=name)
 
         # Construct URL
-        url = '/providers/Microsoft.Cdn/checkNameAvailability'
+        url = self.check_name_availability.metadata['url']
 
         # Construct parameters
         query_parameters = {}
@@ -156,7 +157,7 @@ class CdnManagementClient(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.ErrorResponseException(self._deserialize, response)
@@ -171,6 +172,7 @@ class CdnManagementClient(object):
             return client_raw_response
 
         return deserialized
+    check_name_availability.metadata = {'url': '/providers/Microsoft.Cdn/checkNameAvailability'}
 
     def validate_probe(
             self, probe_url, custom_headers=None, raw=False, **operation_config):
@@ -196,7 +198,7 @@ class CdnManagementClient(object):
         validate_probe_input = models.ValidateProbeInput(probe_url=probe_url)
 
         # Construct URL
-        url = '/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe'
+        url = self.validate_probe.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
@@ -222,7 +224,7 @@ class CdnManagementClient(object):
         # Construct and send request
         request = self._client.post(url, query_parameters)
         response = self._client.send(
-            request, header_parameters, body_content, **operation_config)
+            request, header_parameters, body_content, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.ErrorResponseException(self._deserialize, response)
@@ -237,3 +239,4 @@ class CdnManagementClient(object):
             return client_raw_response
 
         return deserialized
+    validate_probe.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe'}
