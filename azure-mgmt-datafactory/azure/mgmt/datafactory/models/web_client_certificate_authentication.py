@@ -18,16 +18,18 @@ class WebClientCertificateAuthentication(WebLinkedServiceTypeProperties):
     authentication; the server must also provide valid credentials to the
     client.
 
-    :param url: The URL of the web service endpoint, e.g.
+    All required parameters must be populated in order to send to Azure.
+
+    :param url: Required. The URL of the web service endpoint, e.g.
      http://www.microsoft.com . Type: string (or Expression with resultType
      string).
     :type url: object
-    :param authentication_type: Constant filled by server.
+    :param authentication_type: Required. Constant filled by server.
     :type authentication_type: str
-    :param pfx: Base64-encoded contents of a PFX file.
-    :type pfx: ~azure.mgmt.datafactory.models.SecureString
-    :param password: Password for the PFX file.
-    :type password: ~azure.mgmt.datafactory.models.SecureString
+    :param pfx: Required. Base64-encoded contents of a PFX file.
+    :type pfx: ~azure.mgmt.datafactory.models.SecretBase
+    :param password: Required. Password for the PFX file.
+    :type password: ~azure.mgmt.datafactory.models.SecretBase
     """
 
     _validation = {
@@ -40,12 +42,12 @@ class WebClientCertificateAuthentication(WebLinkedServiceTypeProperties):
     _attribute_map = {
         'url': {'key': 'url', 'type': 'object'},
         'authentication_type': {'key': 'authenticationType', 'type': 'str'},
-        'pfx': {'key': 'pfx', 'type': 'SecureString'},
-        'password': {'key': 'password', 'type': 'SecureString'},
+        'pfx': {'key': 'pfx', 'type': 'SecretBase'},
+        'password': {'key': 'password', 'type': 'SecretBase'},
     }
 
-    def __init__(self, url, pfx, password):
-        super(WebClientCertificateAuthentication, self).__init__(url=url)
-        self.pfx = pfx
-        self.password = password
+    def __init__(self, **kwargs):
+        super(WebClientCertificateAuthentication, self).__init__(**kwargs)
+        self.pfx = kwargs.get('pfx', None)
+        self.password = kwargs.get('password', None)
         self.authentication_type = 'ClientCertificate'

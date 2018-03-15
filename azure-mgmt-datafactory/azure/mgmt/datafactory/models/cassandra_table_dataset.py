@@ -15,6 +15,8 @@ from .dataset import Dataset
 class CassandraTableDataset(Dataset):
     """The Cassandra database dataset.
 
+    All required parameters must be populated in order to send to Azure.
+
     :param additional_properties: Unmatched properties from the message are
      deserialized this collection
     :type additional_properties: dict[str, object]
@@ -23,13 +25,16 @@ class CassandraTableDataset(Dataset):
     :param structure: Columns that define the structure of the dataset. Type:
      array (or Expression with resultType array), itemType: DatasetDataElement.
     :type structure: object
-    :param linked_service_name: Linked service reference.
+    :param linked_service_name: Required. Linked service reference.
     :type linked_service_name:
      ~azure.mgmt.datafactory.models.LinkedServiceReference
     :param parameters: Parameters for dataset.
     :type parameters: dict[str,
      ~azure.mgmt.datafactory.models.ParameterSpecification]
-    :param type: Constant filled by server.
+    :param annotations: List of tags that can be used for describing the
+     Dataset.
+    :type annotations: list[object]
+    :param type: Required. Constant filled by server.
     :type type: str
     :param table_name: The table name of the Cassandra database. Type: string
      (or Expression with resultType string).
@@ -50,13 +55,14 @@ class CassandraTableDataset(Dataset):
         'structure': {'key': 'structure', 'type': 'object'},
         'linked_service_name': {'key': 'linkedServiceName', 'type': 'LinkedServiceReference'},
         'parameters': {'key': 'parameters', 'type': '{ParameterSpecification}'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
         'type': {'key': 'type', 'type': 'str'},
         'table_name': {'key': 'typeProperties.tableName', 'type': 'object'},
         'keyspace': {'key': 'typeProperties.keyspace', 'type': 'object'},
     }
 
-    def __init__(self, linked_service_name, additional_properties=None, description=None, structure=None, parameters=None, table_name=None, keyspace=None):
-        super(CassandraTableDataset, self).__init__(additional_properties=additional_properties, description=description, structure=structure, linked_service_name=linked_service_name, parameters=parameters)
-        self.table_name = table_name
-        self.keyspace = keyspace
+    def __init__(self, **kwargs):
+        super(CassandraTableDataset, self).__init__(**kwargs)
+        self.table_name = kwargs.get('table_name', None)
+        self.keyspace = kwargs.get('keyspace', None)
         self.type = 'CassandraTable'

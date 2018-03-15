@@ -26,16 +26,28 @@ class IntegrationRuntimeSsisProperties(Model):
      Possible values include: 'BasePrice', 'LicenseIncluded'
     :type license_type: str or
      ~azure.mgmt.datafactory.models.IntegrationRuntimeLicenseType
+    :param custom_setup_script_properties: Custom setup script properties for
+     a managed dedicated integration runtime.
+    :type custom_setup_script_properties:
+     ~azure.mgmt.datafactory.models.IntegrationRuntimeCustomSetupScriptProperties
+    :param edition: The edition for the SSIS Integration Runtime. Possible
+     values include: 'Standard', 'Enterprise'
+    :type edition: str or
+     ~azure.mgmt.datafactory.models.IntegrationRuntimeEdition
     """
 
     _attribute_map = {
         'additional_properties': {'key': '', 'type': '{object}'},
         'catalog_info': {'key': 'catalogInfo', 'type': 'IntegrationRuntimeSsisCatalogInfo'},
         'license_type': {'key': 'licenseType', 'type': 'str'},
+        'custom_setup_script_properties': {'key': 'customSetupScriptProperties', 'type': 'IntegrationRuntimeCustomSetupScriptProperties'},
+        'edition': {'key': 'edition', 'type': 'str'},
     }
 
-    def __init__(self, additional_properties=None, catalog_info=None, license_type=None):
-        super(IntegrationRuntimeSsisProperties, self).__init__()
-        self.additional_properties = additional_properties
-        self.catalog_info = catalog_info
-        self.license_type = license_type
+    def __init__(self, **kwargs):
+        super(IntegrationRuntimeSsisProperties, self).__init__(**kwargs)
+        self.additional_properties = kwargs.get('additional_properties', None)
+        self.catalog_info = kwargs.get('catalog_info', None)
+        self.license_type = kwargs.get('license_type', None)
+        self.custom_setup_script_properties = kwargs.get('custom_setup_script_properties', None)
+        self.edition = kwargs.get('edition', None)

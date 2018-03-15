@@ -18,15 +18,20 @@ class ManagedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
+    All required parameters must be populated in order to send to Azure.
+
     :param additional_properties: Unmatched properties from the message are
      deserialized this collection
     :type additional_properties: dict[str, object]
+    :ivar data_factory_name: The data factory name which the integration
+     runtime belong to.
+    :vartype data_factory_name: str
     :ivar state: The state of integration runtime. Possible values include:
      'Initial', 'Stopped', 'Started', 'Starting', 'Stopping',
      'NeedRegistration', 'Online', 'Limited', 'Offline'
     :vartype state: str or
      ~azure.mgmt.datafactory.models.IntegrationRuntimeState
-    :param type: Constant filled by server.
+    :param type: Required. Constant filled by server.
     :type type: str
     :ivar create_time: The time at which the integration runtime was created,
      in ISO8601 format.
@@ -44,6 +49,7 @@ class ManagedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
     """
 
     _validation = {
+        'data_factory_name': {'readonly': True},
         'state': {'readonly': True},
         'type': {'required': True},
         'create_time': {'readonly': True},
@@ -54,6 +60,7 @@ class ManagedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
 
     _attribute_map = {
         'additional_properties': {'key': '', 'type': '{object}'},
+        'data_factory_name': {'key': 'dataFactoryName', 'type': 'str'},
         'state': {'key': 'state', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'create_time': {'key': 'typeProperties.createTime', 'type': 'iso-8601'},
@@ -62,8 +69,8 @@ class ManagedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
         'last_operation': {'key': 'typeProperties.lastOperation', 'type': 'ManagedIntegrationRuntimeOperationResult'},
     }
 
-    def __init__(self, additional_properties=None):
-        super(ManagedIntegrationRuntimeStatus, self).__init__(additional_properties=additional_properties)
+    def __init__(self, **kwargs):
+        super(ManagedIntegrationRuntimeStatus, self).__init__(**kwargs)
         self.create_time = None
         self.nodes = None
         self.other_errors = None

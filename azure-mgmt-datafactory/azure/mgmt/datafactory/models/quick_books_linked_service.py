@@ -15,6 +15,8 @@ from .linked_service import LinkedService
 class QuickBooksLinkedService(LinkedService):
     """QuickBooks server linked service.
 
+    All required parameters must be populated in order to send to Azure.
+
     :param additional_properties: Unmatched properties from the message are
      deserialized this collection
     :type additional_properties: dict[str, object]
@@ -23,12 +25,19 @@ class QuickBooksLinkedService(LinkedService):
      ~azure.mgmt.datafactory.models.IntegrationRuntimeReference
     :param description: Linked service description.
     :type description: str
-    :param type: Constant filled by server.
+    :param parameters: Parameters for linked service.
+    :type parameters: dict[str,
+     ~azure.mgmt.datafactory.models.ParameterSpecification]
+    :param annotations: List of tags that can be used for describing the
+     Dataset.
+    :type annotations: list[object]
+    :param type: Required. Constant filled by server.
     :type type: str
-    :param endpoint: The endpoint of the QuickBooks server. (i.e.
+    :param endpoint: Required. The endpoint of the QuickBooks server. (i.e.
      quickbooks.api.intuit.com)
     :type endpoint: object
-    :param company_id: The company ID of the QuickBooks company to authorize.
+    :param company_id: Required. The company ID of the QuickBooks company to
+     authorize.
     :type company_id: object
     :param access_token: The access token for OAuth 1.0 authentication.
     :type access_token: ~azure.mgmt.datafactory.models.SecretBase
@@ -54,6 +63,8 @@ class QuickBooksLinkedService(LinkedService):
         'additional_properties': {'key': '', 'type': '{object}'},
         'connect_via': {'key': 'connectVia', 'type': 'IntegrationRuntimeReference'},
         'description': {'key': 'description', 'type': 'str'},
+        'parameters': {'key': 'parameters', 'type': '{ParameterSpecification}'},
+        'annotations': {'key': 'annotations', 'type': '[object]'},
         'type': {'key': 'type', 'type': 'str'},
         'endpoint': {'key': 'typeProperties.endpoint', 'type': 'object'},
         'company_id': {'key': 'typeProperties.companyId', 'type': 'object'},
@@ -63,12 +74,12 @@ class QuickBooksLinkedService(LinkedService):
         'encrypted_credential': {'key': 'typeProperties.encryptedCredential', 'type': 'object'},
     }
 
-    def __init__(self, endpoint, company_id, additional_properties=None, connect_via=None, description=None, access_token=None, access_token_secret=None, use_encrypted_endpoints=None, encrypted_credential=None):
-        super(QuickBooksLinkedService, self).__init__(additional_properties=additional_properties, connect_via=connect_via, description=description)
-        self.endpoint = endpoint
-        self.company_id = company_id
-        self.access_token = access_token
-        self.access_token_secret = access_token_secret
-        self.use_encrypted_endpoints = use_encrypted_endpoints
-        self.encrypted_credential = encrypted_credential
+    def __init__(self, **kwargs):
+        super(QuickBooksLinkedService, self).__init__(**kwargs)
+        self.endpoint = kwargs.get('endpoint', None)
+        self.company_id = kwargs.get('company_id', None)
+        self.access_token = kwargs.get('access_token', None)
+        self.access_token_secret = kwargs.get('access_token_secret', None)
+        self.use_encrypted_endpoints = kwargs.get('use_encrypted_endpoints', None)
+        self.encrypted_credential = kwargs.get('encrypted_credential', None)
         self.type = 'QuickBooks'
