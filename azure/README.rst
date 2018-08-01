@@ -6,11 +6,20 @@ This is the Microsoft Azure bundle.
 This package does not contain any code in itself. It installs a set
 of packages that provide Microsoft Azure functionality.
 
-All packages in this bundle have been tested with Python 2.7, 3.4, 3.5 and 3.6.
+All packages in this bundle have been tested with Python 2.7, 3.4, 3.5, 3.6 and 3.7.
 
 This package uses PEP440 syntax, and thus requires pip >= 6.0 and/or setuptools >= 8.0
 to be installed.
 
+Disclaimer
+==========
+
+Starting with azure 5.0, this package will *not*
+pin its dependencies to a particular version. This package should be considered as a simple
+quickstart and not for production purposes.
+
+For use in production and in applications, you should always depend on specific versions of each independent
+service you use. Exemple: azure-mgmt-compute==3.0.0
 
 Documentation
 =============
@@ -23,7 +32,7 @@ Features
 
 This version of the Azure package bundle consists of the following
 packages. Follow the links for more information on each package.
-Note that versions are fixed at the minor version number level 
+Note that versions are fixed at the minor version number level
 (i.e. no breaking changes can be introduced, but features are allowed)
 
 -  `azure-mgmt v2.x <https://pypi.python.org/pypi/azure-mgmt>`__

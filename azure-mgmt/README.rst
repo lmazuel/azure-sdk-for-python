@@ -17,6 +17,17 @@ to be installed.
 For a more complete set of Azure libraries, see the `azure <https://pypi.python.org/pypi/azure>`__ bundle package.
 
 
+Disclaimer
+==========
+
+Starting with azure-mgmt 5.0, this package will *not*
+pin its dependencies to a particular version. This package should be considered as a simple
+quickstart and not for production purposes.
+
+For use in production and in applications, you should always depend on specific versions of each independent
+service you use. Exemple: azure-mgmt-compute==3.0.0
+
+
 Documentation
 =============
 
