@@ -1,0 +1,107 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - azsdk-python-learnappconfig/0.0.1 Python/3.8.5 (Windows-10-10.0.19041-SP0)
+    method: GET
+    uri: https://fake-app-config-url.azconfig.io/kv/FontColor?api-version=1.0
+  response:
+    body:
+      string: '{"etag":"Xf2K3YG17tJjIB6q69Hnx6mbnG8","key":"FontColor","label":null,"content_type":null,"value":"Green","tags":{},"locked":false,"last_modified":"2020-10-15T17:41:40+00:00"}'
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since,
+        Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent,
+        x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match,
+        If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified,
+        Link, Memento-Datetime, retry-after-ms, x-ms-request-id, WWW-Authenticate
+      connection:
+      - keep-alive
+      content-length:
+      - '174'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Oct 2020 18:31:24 GMT
+      etag:
+      - W/"Xf2K3YG17tJjIB6q69Hnx6mbnG8"
+      last-modified:
+      - Thu, 15 Oct 2020 17:41:40 GMT
+      server:
+      - openresty/1.17.8.2
+      strict-transport-security:
+      - max-age=15724800; includeSubDomains
+      sync-token:
+      - zAJw6V16=NDo0IzI3MzU1OTEjNz02ODQ0NTg=;sn=2735591
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - azsdk-python-learnappconfig/0.0.1 Python/3.8.5 (Windows-10-10.0.19041-SP0)
+    method: GET
+    uri: https://fake-app-config-url.azconfig.io/kv/GreetingText?api-version=1.0
+  response:
+    body:
+      string: '{"etag":"37XDDL5YchvmcUey6B1D8yjHseA","key":"GreetingText","label":null,"content_type":"","value":"Hello
+        World!","tags":{},"locked":false,"last_modified":"2020-10-15T21:46:02+00:00"}'
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since,
+        Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent,
+        x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match,
+        If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified,
+        Link, Memento-Datetime, retry-after-ms, x-ms-request-id, WWW-Authenticate
+      connection:
+      - keep-alive
+      content-length:
+      - '182'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Oct 2020 18:31:24 GMT
+      etag:
+      - W/"37XDDL5YchvmcUey6B1D8yjHseA"
+      last-modified:
+      - Thu, 15 Oct 2020 21:46:02 GMT
+      server:
+      - openresty/1.17.8.2
+      strict-transport-security:
+      - max-age=15724800; includeSubDomains
+      sync-token:
+      - zAJw6V16=NDo0IzI3MzU1OTEjNz02ODQ0NTg=;sn=2735591
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+    status:
+      code: 200
+      message: OK
+version: 1

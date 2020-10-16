@@ -1,28 +1,30 @@
+import os
 import pytest
 
-from _shared.testcase import AppConfigTestCase
+from _shared.asynctestcase import AsyncAppConfigTestCase
 
-from azure.learnappconfig import AppConfigurationClient
+from azure.learnappconfig.aio import AppConfigurationClient
 from azure.core.exceptions import ResourceNotFoundError
 
 APP_CONFIG_URL = "https://fake-app-config-url.azconfig.io"
 
-class AppConfigurationClientTest(AppConfigTestCase):
+class AppConfigurationClientTest(AsyncAppConfigTestCase):
     def setUp(self):
         super(AppConfigurationClientTest, self).setUp()
-        # Set the env variable AZURE_APP_CONFIG_URL or put APP_CONFIG_URL in your "mgmt_settings_real.py" file
         self.app_config_url = self.set_value_to_scrub('APP_CONFIG_URL', APP_CONFIG_URL)
 
-    def test_get_key_value(self):
+    @pytest.mark.asyncio
+    async def test_get_key_value(self):
         client = self.create_basic_client(AppConfigurationClient, account_url=self.app_config_url)
         assert client is not None
 
-        assert self.env_color == client.get_configuration_setting(self.env_color_key)['value']
-        assert self.env_greeting == client.get_configuration_setting(self.env_greeting_key)['value']
+        assert self.env_color == await client.get_configuration_setting(self.env_color_key)
+        assert self.env_greeting == await client.get_configuration_setting(self.env_greeting_key)
 
-    def test_get_invalid_key(self):
+    @pytest.mark.asyncio
+    async def test_get_invalid_key(self):
         client = self.create_basic_client(AppConfigurationClient, account_url=self.app_config_url)
         assert client is not None
 
         with pytest.raises(ResourceNotFoundError):
-            client.get_configuration_setting("KEY_THAT_DOES_NOT_EXIST")
+            await client.get_configuration_setting("KEY_THAT_DOES_NOT_EXIST")
